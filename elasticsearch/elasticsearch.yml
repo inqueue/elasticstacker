@@ -1,0 +1,40 @@
+xpack.license.self_generated.type: trial
+cluster.name: $CLUSTER_NAME
+#discovery.type: single-node
+discovery.seed_hosts:
+  - $MASTER_IP
+cluster.initial_master_nodes:
+  - $MASTER_NODE_NAME
+node.name: \${HOSTNAME}
+network.host: _local_, _site_
+network.publish_host: \${HOSTNAME}.$DOMAIN
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+node:
+  master: true
+  data: true
+  ml: true
+  attr.data: hot
+
+# Security
+xpack.security:
+  enabled: true
+  http:
+    ssl:
+      enabled: true
+      key: /etc/elasticsearch/certs/\${HOSTNAME}/\${HOSTNAME}.key
+      certificate: /etc/elasticsearch/certs/\${HOSTNAME}/\${HOSTNAME}.crt
+      certificate_authorities: ["/etc/elasticsearch/certs/ca/ca.crt"]
+  transport:
+    ssl:
+      enabled: true
+      key: /etc/elasticsearch/certs/\${HOSTNAME}/\${HOSTNAME}.key
+      certificate: /etc/elasticsearch/certs/\${HOSTNAME}/\${HOSTNAME}.crt
+      certificate_authorities: ["/etc/elasticsearch/certs/ca/ca.crt"]
+      verification_mode: full
+
+# Watcher
+xpack.http:
+  ssl:
+    certificate_authorities: ["/etc/elasticsearch/certs/ca/ca.crt"]
+    verification_mode: full
